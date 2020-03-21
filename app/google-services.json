@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "388969806045",
+    "firebase_url": "https://osekapp.firebaseio.com",
+    "project_id": "osekapp",
+    "storage_bucket": "osekapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388969806045:android:3478e314de46a059",
+        "android_client_info": {
+          "package_name": "com.example.theroos.contacts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388969806045-m4u7qfis4kgf0uiv2p6m8bak6isp6mvp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.theroos.contacts",
+            "certificate_hash": "d908a20db2f3168d9c702643a8ac2e39b74e526d"
+          }
+        },
+        {
+          "client_id": "388969806045-9s48r4bql4rn9dfev0uavjcas34aijo8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCznGGMLQK6oqfai-h2QsdhE8xTT70pXcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388969806045-9s48r4bql4rn9dfev0uavjcas34aijo8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

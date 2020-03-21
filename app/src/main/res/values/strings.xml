@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">OsekApp</string>
+    <string name="HomeText" translatable="false">This is an App for Testing purpose. Don\'t take it too seriously</string>
+    <string name="versionno" translatable="false">This app is currently running on android version</string>
+    <string name="Darkmdtext" translatable="false">"Enable Dark mode"</string>
+    <string name="Lightmdtext" translatable="false">"Disable Dark mode"</string>
+    <string name="Inputnumhint" translatable="false">"Enter your phone number here"</string>
+    <string name="AlertYes" translatable="false">"Yes"</string>
+    <string name="AlertNo" translatable="false">"No"</string>
+    <string name="edit_profile" translatable="false">"Update Profile"</string>
+    <string name="please_enter_your_status" translatable="false">Please Enter Your Status</string>
+    <string name="select_your_profile_picture">Select your Profile Picture</string>
+</resources>
