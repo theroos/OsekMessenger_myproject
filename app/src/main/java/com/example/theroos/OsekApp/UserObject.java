@@ -2,21 +2,21 @@ package com.example.theroos.OsekApp;
 
 public class UserObject {
 
-    public String name, phone, status;
+    public String name, phone, id;
 
-    public UserObject(String s, String name){};
+    public UserObject(String name, String phone) {
+    }
 
-    public UserObject(String s, String name, String phone, String status){
+    public UserObject(String key, String name, String phone, String id){}
+
+
+    public UserObject(String name, String phone, String id){
         this.name = name;
         this.phone = phone;
-        this.status = status;
+        this.id = id;
     }
 
     public UserObject(){
-
-    }
-
-    public UserObject(String name, String phone, String status) {
 
     }
 
@@ -33,8 +33,9 @@ public class UserObject {
 
     public void setPhone(String phone) { this.phone = phone; }
 
-    public String getStatus(){return status;}
+    public String getId() { return id; }
 
-    public void setStatus(String status){this.status = status; }
+    public void setId(String id){this.id = id;}
+
 
 }

@@ -1,21 +1,20 @@
 package com.example.theroos.OsekApp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +26,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class FragmentProfile extends Fragment {
 
     private TextView profilename, profilenumber, profilestatus;
-    private ImageView backarrow;
     private CircularImageView profilepicture;
     private Button updateprofile;
     private DatabaseReference mDatabase;
@@ -39,22 +37,20 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     public String profilepicURI;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profilenew);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View V = inflater.inflate(R.layout.fragment_profile,container,false);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
         uid = user.getUid();
 
-        profilename = findViewById(R.id.display_name);
-        profilenumber = findViewById(R.id.display_number);
-        profilestatus = findViewById(R.id.display_status);
-        profilepicture = findViewById(R.id.display_picture);
-        updateprofile = findViewById(R.id.button_updateprofile);
-        backarrow = findViewById(R.id.backarrow);
-
+        profilename = V.findViewById(R.id.display_name);
+        profilenumber = V.findViewById(R.id.display_number);
+        profilestatus = V.findViewById(R.id.display_status);
+        profilepicture = V.findViewById(R.id.display_picture);
+        updateprofile = V.findViewById(R.id.button_updateprofile);
 
         clicks();
 
@@ -62,6 +58,43 @@ public class ProfileActivity extends AppCompatActivity {
 
         displayprofilepicture();
 
+        return V;
+    }
+
+    private void clicks() {
+        updateprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+    }
+
+    private void displayprofilepicture() {
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("ProfilePictures").child(user.getUid());
+
+        final DatabaseReference mdatabaseURL = FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid()).child("ProfileImageURI");
+        mdatabaseURL.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+                    profilepicURI = dataSnapshot.getValue().toString();
+                    //Toast.makeText(getActivity(),profilepicURI,Toast.LENGTH_LONG).show();
+                    Glide.with(getActivity()).load(profilepicURI).into(profilepicture);
+                }
+                else{
+                    profilepicture.setImageResource(R.drawable.ic_person_white_24dp);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void loaduserinformation() {
@@ -131,60 +164,14 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void displayprofilepicture(){
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("ProfilePictures").child(user.getUid());
-
-        final DatabaseReference mdatabaseURL = FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid()).child("ProfileImageURI");
-        mdatabaseURL.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.exists()){
-                    profilepicURI = dataSnapshot.getValue().toString();
-                    Toast.makeText(getApplicationContext(),profilepicURI,Toast.LENGTH_LONG);
-                    Glide.with(getApplicationContext()).load(profilepicURI).into(profilepicture);
-                }
-                else{
-                    profilepicture.setImageResource(R.drawable.ic_person_white_24dp);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    private void clicks() {
-
-        updateprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialog();
-            }
-        });
-
-        /*backarrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProfileActivity.this.finish();
-            }
-        });*/
-
-    }
-
     private void openDialog() {
-            FragmentManager fm = getSupportFragmentManager();
-            Bundle bundle = new Bundle();
-            bundle.putString("text",profilepicURI);
-            ProfileUpdateDialog profileupdatedialog = new ProfileUpdateDialog();
-            profileupdatedialog.setArguments(bundle);
-            profileupdatedialog.show(fm, "dialog_update_profile");
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Bundle bundle = new Bundle();
+        bundle.putString("text",profilepicURI);
+        ProfileUpdateDialog profileupdatedialog = new ProfileUpdateDialog();
+        profileupdatedialog.setArguments(bundle);
+        profileupdatedialog.show(fm, "dialog_update_profile");
     }
+
 
 }
-

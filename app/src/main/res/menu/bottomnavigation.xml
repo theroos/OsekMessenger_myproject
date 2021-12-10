@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_chat"
+        android:title="Chat"
+        android:icon="@drawable/flaticon_chat_outline"/>
+
+    <item
+        android:id="@+id/nav_calls"
+        android:title="Call"
+        android:icon="@drawable/flaticon_call_outline"/>
+
+    <item
+        android:id="@+id/nav_contact"
+        android:title="Contacts"
+        android:icon="@drawable/flaticon_contacts_outline"/>
+
+    <item
+        android:id="@+id/nav_profile"
+        android:title="You"
+        android:icon="@drawable/flaticon_profile_outline"/>
+
+</menu>

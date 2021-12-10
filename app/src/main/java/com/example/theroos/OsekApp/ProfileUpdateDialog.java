@@ -92,6 +92,7 @@ public class ProfileUpdateDialog extends AppCompatDialogFragment {
         cancelbutton = view.findViewById(R.id.cancel_button);
         updateprofilepicture = view.findViewById(R.id.update_profilepicture);
         updatepicturecameraicon = view.findViewById(R.id.update_profilepicture_camera);
+
         buttomsheetdialog = new BottomSheetDialog(getActivity());
         final View bottomSheetDialogview = getLayoutInflater().inflate(R.layout.dialog_bottomsheet_gallery_camera, null);
         buttomsheetdialog.setContentView(bottomSheetDialogview);
@@ -102,8 +103,6 @@ public class ProfileUpdateDialog extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "IMG_FOLDER");
-                resultimgUri = Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + "profile_img.jpg"));
                 startActivityForResult(i, 100);
                 buttomsheetdialog.dismiss();
             }
@@ -265,20 +264,22 @@ public class ProfileUpdateDialog extends AppCompatDialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1)
-        {
-            if(data != null){
+        if(data != null){
+            if(requestCode == 1)
+            {
                 resultimgUri = data.getData();
                 updateprofilepicture.setImageURI(resultimgUri);
-            }
-        } else if(requestCode == 100)
-        {
-            if (data != null) {
+
+            } else if(requestCode == 100)
+            {
                 Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-                resultimgUri = getImageUri(bitmap);
+                //resultimgUri = getImageUri(bitmap);
+                String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, "Title", null);
+                //resultimgUri = Uri.parse(path);
                 updateprofilepicture.setImageBitmap(bitmap);
             }
         }
+
     }
 
     private String getExtension (Uri uri){

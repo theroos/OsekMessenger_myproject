@@ -13,17 +13,19 @@ import java.util.ArrayList;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
 
+    Context cntxt;
     ArrayList<UserObject> userList;
 
-    public UserListAdapter(Context applicationContext, ArrayList<UserObject> userList){
-
+    public UserListAdapter(Context cntxt, ArrayList<UserObject> userList){
         this.userList = userList;
+        this.cntxt = cntxt;
     }
 
     @NonNull
     @Override
     public UserListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View layoutview = LayoutInflater.from(parent.getContext()).inflate(R.layout.object_user,null,false);
+        //View layoutview = LayoutInflater.from(parent.getContext()).inflate(R.layout.object_user,null,false);
+        View layoutview = LayoutInflater.from(cntxt).inflate(R.layout.object_user,null,false);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutview.setLayoutParams(lp);
         UserListViewHolder rcv = new UserListViewHolder(layoutview);
@@ -47,13 +49,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         public TextView mName, mPhone;
 
 
-
         public UserListViewHolder(View view){
             super(view);
             mName = view.findViewById(R.id.mname);
             mPhone = view.findViewById(R.id.mphone);
-
-
         }
 
     }

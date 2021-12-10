@@ -3,22 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/AlmostInvisibleLines">
+    android:layout_height="wrap_content"
+    android:background="@color/White">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:layout_margin="2dp"
-        android:background="@drawable/layout_corner"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:background="@color/White"
             android:src="@drawable/ic_person_black_24dp"/>
 
         <LinearLayout
@@ -33,7 +31,6 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:textSize="14dp"
-                android:textColor="@color/GreyDark"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"

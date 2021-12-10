@@ -1,15 +1,20 @@
+
 package com.example.theroos.OsekApp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.util.CollectionUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +41,6 @@ public class ContactsActivity extends AppCompatActivity {
 
         mUserlist = findViewById(R.id.userList);
         mUserlist.setLayoutManager( new LinearLayoutManager(this));
-
         contactlist = new ArrayList<>();
         userList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
@@ -46,13 +50,14 @@ public class ContactsActivity extends AppCompatActivity {
         getContacts();
     }
 
+
     private void getContacts() {
         Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC",null);
         while (phones.moveToNext()){
             String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-            UserObject mObject = new UserObject("",name,phone);
+            UserObject mObject = new UserObject(name,phone);
             contactlist.add(mObject);
             //mUserlistAdapter.notifyDataSetChanged();
             getUserDetails(mObject);
@@ -78,7 +83,7 @@ public class ContactsActivity extends AppCompatActivity {
                         userList.add(uscls);
                     }
 
-                    adapter = new UserListAdapter(getApplicationContext(),userList);
+                    adapter = new UserListAdapter(getApplicationContext(),contactlist);
                     mUserlist.setAdapter(adapter);
                 }
 
